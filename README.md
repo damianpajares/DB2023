@@ -14,87 +14,38 @@ TABLAS,ATRIBUTOS,TIPO,LARGO,RESTRICCIONES,DESCRIPCIÓN
 -Email_de_Usuario Tipo String no vacío
 -Tipo de usuario
 
-###PROFESOR
+#PROFESOR
 Cedula String 8  -Clave Primaria - Foreign key Identificador de Usuario
 IdProfesor Integer -Clave Primaria Identificador débil de Profesor
 Grado string  vacío Grado de Profesor
 
-ALUMNOS
+#ALUMNOS
 Cedula String 8  Clave Primaria - Foreign key Identificador de Usuario
 IdAlumnos Integer Clave Primaria Identificador debil de Alumno
 
-BEDELÍAS
-Cedula
-String
-8
-Clave Primaria - Foreign key
-Identificador de Usuario
-IdBedelia
-Integer
--
-Clave Primaria
-Identificador débil de Bedelía
-Cargo
-String
--
-vacío
-Grado del cargo
-MATERIAS
-IdMateria
-Incremental
--
-Clave Primaria
+#BEDELÍAS
+Cedula String 8 Clave Primaria - Foreign key  Identificador de Usuario
+IdBedelia Integer Clave Primaria Identificador débil de Bedelía
+Cargo String -vacío Grado del cargo
+#MATERIAS
+IdMateria Incremental -  Clave Primaria
 Identificador de Materia
-Nombre
-String
--
-no vacío
-Nombre de Materia
-GRUPOS
-idGrupo
-String
-10
-Clave Primaria
+Nombre String - no vacío Nombre de Materia
+
+#GRUPOS
+idGrupo String 10 Clave Primaria
 Identificador de Grupo por Acrónimo
-Nombre
-String
--
-no vacío
-Nombre completo del grupo
-año electivo
-Integer
--
-no vacío
-Año electivo del grupo
-fecha_Creacion
-Integer
--
-no vacío
-Fecha de creación del grupo
-FORO
-IdForo
-Incremental
--
-Clave Primaria
-Identificador de Foro
-Información
-string
--
-vacío
-Información de Foro
-Data
-BLOB
--
-vacío
-Archivos de Foro
-TAREAS
-IdTareas
-Incremental
--
-Clave Primaria
-Identificador de Tarea
-Descripción
-string
+Nombre String - no vacío
+Nombre completo del grupo año electivo
+Integer - no vacío Año electivo del grupo
+fecha_Creacion Integer - no vacío Fecha de creación del grupo 
+FORO IdForo Incremental  - Clave Primaria Identificador de Foro
+Información string - vacío Información de Foro 
+Data BLOB - vacío Archivos de Foro
+
+#TAREAS
+IdTareas Incremental - Clave Primaria
+Identificador de Tarea Descripción string 
 -
 no vacío
 Descripción de Tarea
