@@ -1,4 +1,6 @@
-# TABLAS
+# TABLAS Para el Parcial
+# Fecha de entrega 12/10
+## Subir DER y SQL de la base de datos generada
 
 ## :warning: Advertencia
 
