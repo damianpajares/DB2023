@@ -1,4 +1,4 @@
-# TABLAS Para el Parcial
+# TABLAS Para el Parcial 1
 # Fecha de entrega 12/10
 ## Subir DER y SQL de la base de datos generada
 
