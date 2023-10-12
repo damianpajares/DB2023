@@ -240,5 +240,28 @@ BEGIN
     WHERE estado_id <> (SELECT id FROM Estados WHERE nombre = 'Cerrado')
         AND (SELECT tiempo_respuesta FROM Tiempos_SLA WHERE categoria = 'critica') < DATEDIFF(MINUTE, Tickets.fecha_creacion, @FechaActual)
         AND Tickets.proyecto_id IS NOT NULL; -- Considerar solo los tickets asociados a un proyecto
+END
+-- Crear un trigger que se active cuando un ticket cambia su estado a "Cerrado" y que inserte un registro en la tabla "Formularios_Enviados" y realice cualquier otra acción que necesites para enviar el formulario de satisfacción:
+CREATE TRIGGER EnviarFormularioSatisfaccion
+ON Tickets
+AFTER UPDATE
+AS
+BEGIN
+    IF UPDATE(estado_id) -- Se asegura de que el estado haya sido actualizado
+    BEGIN
+        DECLARE @TicketID INT;
+        SELECT @TicketID = id FROM inserted; -- Obtiene el ID del ticket actualizado
 
-    -- Otra lógica de actualización según los SL
+        IF (SELECT estado_id FROM Tickets WHERE id = @TicketID) = (SELECT id FROM Estados WHERE nombre = 'Cerrado')
+        BEGIN
+            -- Inserta un registro en la tabla "Formularios_Enviados" para indicar que se envió el formulario
+            INSERT INTO Formularios_Enviados (ticket_id) VALUES (@TicketID);
+
+            -- Envía el formulario de satisfacción al cliente (aquí debes agregar la lógica específica para enviar el formulario)
+            -- Esto puede implicar el envío de un correo electrónico o la activación de alguna otra funcionalidad de tu aplicación.
+
+            -- Puedes agregar la lógica de envío del formulario aquí.
+
+        END;
+    END;
+END;
