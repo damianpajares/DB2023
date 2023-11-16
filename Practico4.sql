@@ -24,10 +24,9 @@ CREATE TABLE Activos (
 );
 
 -- Crear tabla de Configuración de Hardware
-CREATE TABLE EstacionesTrabajo (
+CREATE TABLE ConfiguracionHardware (
     id INT PRIMARY KEY,
-    activo_id INT,
-    software_id INT,
+    activo_id INT UNIQUE,
     cpu_marca VARCHAR(50),
     cpu_cores INT,
     cpu_velocidad VARCHAR(20),
@@ -35,19 +34,16 @@ CREATE TABLE EstacionesTrabajo (
     ram_cantidad INT,
     ram_velocidad VARCHAR(20),
     FOREIGN KEY (activo_id) REFERENCES Activos(id)
-    FOREIGN KEY (software_id) REFERENCES ConfiguracionSoftware(id)
 );
 
 -- Crear tabla de Configuración de Software
 CREATE TABLE ConfiguracionSoftware (
     id INT PRIMARY KEY,
-    activo_id INT,
-    software_id INT,
+    activo_id INT UNIQUE,
     sistema_operativo VARCHAR(50),
     antivirus VARCHAR(50),
     otros_software TEXT,
     FOREIGN KEY (activo_id) REFERENCES Activos(id)
-    FOREIGN KEY (software_id) REFERENCES Software(id)
 );
 
 -- Tabla para el software instalado
@@ -55,30 +51,29 @@ CREATE TABLE Software (
     id INT PRIMARY KEY,
     nombre VARCHAR(255),
     version VARCHAR(50),
-    fabricante VARCHAR(100),
+    fabricante VARCHAR(100)
 );
 
 -- Tabla de relación N a N entre Computadoras y Software
-CREATE TABLE Computadoras_Software (
-    computadora_id INT,
+CREATE TABLE EstacionesTrabajo_Software (
+    estacion_trabajo_id INT,
     software_id INT,
-    fecha_instalacion DATE, -- Fecha de instalación del software en la computadora
+    fecha_instalacion DATE, -- Fecha de instalación del software en la estación de trabajo
     licencia VARCHAR(100),  -- Licencia asociada a esta instalación
-    PRIMARY KEY (computadora_id, software_id),
-    FOREIGN KEY (computadora_id) REFERENCES Computadoras(activo_id),
-   
+    PRIMARY KEY (estacion_trabajo_id, software_id),
+    FOREIGN KEY (estacion_trabajo_id) REFERENCES ConfiguracionHardware(id),
+    FOREIGN KEY (software_id) REFERENCES Software(id)
 );
 
 -- Tabla para las licencias que pueden asignarse a usuarios
 CREATE TABLE Licencias (
     id INT PRIMARY KEY,
-    software_id KEY,
+    software_id INT,
     nombre_software VARCHAR(255),
     licencia VARCHAR(100),
-    uso_comercial BOOLEAN ()
-    fecha_caducidad_licencia DATE -- Fecha de caducidad de la licencia (si aplica)
-    FOREIGN KEY (computadora_id) REFERENCES Computadoras(activo_id),
-
+    uso_comercial BOOLEAN,
+    fecha_caducidad_licencia DATE, -- Fecha de caducidad de la licencia (si aplica)
+    FOREIGN KEY (software_id) REFERENCES Software(id)
 );
 
 -- Tabla para los usuarios
@@ -103,9 +98,7 @@ CREATE TABLE Video_Vigilancia (
     activo_id INT PRIMARY KEY,
     modelo_camara VARCHAR(100),
     resolucion VARCHAR(50),
-    tipo_activo_id INT NOT NULL, -- Referencia al tipo de activo
-    FOREIGN KEY (activo_id) REFERENCES Activos(id),
-    FOREIGN KEY (tipo_activo_id) REFERENCES Tipo_Activo(id)
+    FOREIGN KEY (activo_id) REFERENCES Activos(id)
 );
 
 -- Tabla para sistemas de control de acceso
@@ -113,8 +106,5 @@ CREATE TABLE Control_Acceso (
     activo_id INT PRIMARY KEY,
     modelo_dispositivo VARCHAR(100),
     tecnologia VARCHAR(50),
-    tipo_activo_id INT NOT NULL, -- Referencia al tipo de activo
-    FOREIGN KEY (activo_id) REFERENCES Activos(id),
-    FOREIGN KEY (tipo_activo_id) REFERENCES Tipo_Activo(id)
+    FOREIGN KEY (activo_id) REFERENCES Activos(id)
 );
-
