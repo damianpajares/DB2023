@@ -1,11 +1,11 @@
--- Trigger Falso
+-- Trigger Correcto 
 CREATE TRIGGER ActualizarEstadoTicket
 ON Tickets
 AFTER UPDATE
 AS
 BEGIN
-    -- Código falso que intenta actualizar el campo estado_id
+    -- Código falso (no realiza la actualización correcta)
     UPDATE Tickets
-    SET estado_id = (SELECT id FROM Estados WHERE nombre = 'Cerrado')
+    SET estado_id = (SELECT id FROM Estados WHERE nombre = 'En Proceso')
     WHERE estado_id <> (SELECT id FROM Estados WHERE nombre = 'Cerrado');
 END;
