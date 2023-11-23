@@ -1,11 +1,13 @@
--- Trigger Correcto 
+-- Trigger Correcto
 CREATE TRIGGER ActualizarEstadoTicket
 ON Tickets
 AFTER UPDATE
 AS
 BEGIN
-    -- Código falso (no realiza la actualización correcta)
-    UPDATE Tickets
+    -- Código correcto para actualizar el estado solo en las filas afectadas por la operación de actualización
+    UPDATE t
     SET estado_id = (SELECT id FROM Estados WHERE nombre = 'En Proceso')
-    WHERE estado_id <> (SELECT id FROM Estados WHERE nombre = 'Cerrado');
+    FROM Tickets t
+    INNER JOIN inserted i ON t.id = i.id
+    WHERE i.estado_id <> (SELECT id FROM Estados WHERE nombre = 'Cerrado');
 END;
